@@ -36,6 +36,11 @@ public class UsuarioController {
             return this.usuarioService.obtenerPorPrioridad(prioridad);
     }
 
+    @GetMapping("/querynombre")
+    public ArrayList<UsuarioModel> obtenerUsuarioPorNombre(@RequestParam("nombre") String nombre){
+        return this.usuarioService.obtenerPorNombre(nombre);
+    }
+
     @DeleteMapping( path = "/{id}")
     public String eliminarPorId(@PathVariable("id") long id){
         boolean ok = this.usuarioService.eliminarUsuario(id);

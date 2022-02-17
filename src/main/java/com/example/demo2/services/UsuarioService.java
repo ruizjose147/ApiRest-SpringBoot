@@ -30,6 +30,10 @@ public class UsuarioService {
         return usuarioRepository.findByPrioridad(prioridad);
     }
 
+    public ArrayList<UsuarioModel> obtenerPorNombre(String nombre){
+        return usuarioRepository.findByNombre(nombre);
+    }
+
     public boolean eliminarUsuario(long id){
         try {
             usuarioRepository.deleteAllById(Collections.singleton(id));
