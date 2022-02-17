@@ -16,15 +16,6 @@ public class UsuarioModel {
     private int numeroCelular;
     private int prioridad;
 
-
-    public int getNumeroCelular() {
-        return numeroCelular;
-    }
-
-    public void setNumeroCelular(int numeroCelular) {
-        this.numeroCelular = numeroCelular;
-    }
-
     public long getId() {
         return id;
     }
@@ -47,6 +38,14 @@ public class UsuarioModel {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public int getNumeroCelular() {
+        return numeroCelular;
+    }
+
+    public void setNumeroCelular(int numeroCelular) {
+        this.numeroCelular = numeroCelular;
     }
 
     public int getPrioridad() {
