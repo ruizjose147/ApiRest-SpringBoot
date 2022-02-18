@@ -3,9 +3,10 @@ package com.example.demo2.controllers;
 import com.example.demo2.models.UsuarioModel;
 import com.example.demo2.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -32,18 +33,39 @@ public class UsuarioController {
     }
 
     @GetMapping("/query")
-    public ArrayList<UsuarioModel> obtenerUsuarioPorPrioridad(@RequestParam("prioridad") int prioridad){
-            return this.usuarioService.obtenerPorPrioridad(prioridad);
+    public ResponseEntity<ArrayList<UsuarioModel>> obtenerUsuarioPorPrioridad(@RequestParam("prioridad") int prioridad){
+            ArrayList<UsuarioModel> usuarioPrioridad = this.usuarioService.obtenerPorPrioridad(prioridad);
+            if(usuarioPrioridad.isEmpty())
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(usuarioPrioridad, HttpStatus.OK);
     }
 
     @GetMapping("/querynombre")
-    public ArrayList<UsuarioModel> obtenerUsuarioPorNombre(@RequestParam("nombre") String nombre){
-        return this.usuarioService.obtenerPorNombre(nombre);
+    public ResponseEntity<ArrayList<UsuarioModel>> obtenerUsuarioPorNombre(@RequestParam("nombre") String nombre){
+        try {
+            ArrayList<UsuarioModel> usuarioEncontrado = this.usuarioService.obtenerPorNombre(nombre);
+            if(usuarioEncontrado.isEmpty())
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+            return new ResponseEntity<>(usuarioEncontrado, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+        }
     }
 
     @GetMapping("/queryemail")
-    public ArrayList<UsuarioModel> obtenerUsuarioPorEmail(@RequestParam("email") String email){
-        return this.usuarioService.obtenerPorEmail(email);
+    public ResponseEntity<ArrayList<UsuarioModel>> obtenerUsuarioPorEmail(@RequestParam("email") String email){
+        try {
+            ArrayList<UsuarioModel> usuarioEncontrado = this.usuarioService.obtenerPorEmail(email);
+            if(usuarioEncontrado.isEmpty())
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+            return new ResponseEntity<>(usuarioEncontrado, HttpStatus.OK);
+
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+        }
+
     }
 
     @DeleteMapping( path = "/{id}")
